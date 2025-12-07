@@ -36,7 +36,9 @@ if not SECRET_KEY:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DJANGO_DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = ['kwentasklaras-2.onrender.com']
+ALLOWED_HOSTS = [ "kwentasklaras-2.onrender.com",
+    "localhost",
+    "127.0.0.1"]
 
 
 # Application definition
