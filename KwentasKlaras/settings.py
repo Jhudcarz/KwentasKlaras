@@ -210,7 +210,7 @@ SESSION_COOKIE_HTTPONLY = True
 CSRF_COOKIE_HTTPONLY = True
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://kwentas-klaras-212030727385.asia-southeast1.run.app",
+    "https://kwentasklaras-2.onrender.com",
 ]
 
 LOGGING = {
