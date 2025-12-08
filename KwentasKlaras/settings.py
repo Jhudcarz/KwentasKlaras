@@ -36,7 +36,8 @@ if not SECRET_KEY:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DJANGO_DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = ['kwentasklaras-production.up.railway.app','localhost']
+ALLOWED_HOSTS = ['kwentasklaras-production-7b69.up.railway.app',
+    'localhost']
 
 
 # Application definition
