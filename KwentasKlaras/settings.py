@@ -14,6 +14,10 @@ from pathlib import Path
 from dotenv import load_dotenv
 import logging.config
 
+
+import dj_database_url
+
+
 # Load environment variables
 load_dotenv()
 import os
@@ -98,13 +102,28 @@ WSGI_APPLICATION = 'KwentasKlaras.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+#ENVIRONMENT = os.getenv('ENVIRONMENT', 'production')
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+#}
+
 ENVIRONMENT = os.getenv('ENVIRONMENT', 'production')
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+
+if ENVIRONMENT == 'local':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+    }
+
 
 
 # if ENVIRONMENT == 'local':
