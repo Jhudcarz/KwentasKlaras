@@ -120,16 +120,32 @@ if ENVIRONMENT == 'local':
         }
     }
 else:
-    DATABASES = {
-    'default': {
-        'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.sqlite3'),
-        'NAME': os.getenv('DB_NAME', os.path.join(BASE_DIR, 'db.sqlite3')),
-        'USER': os.getenv('DB_USER', ''),
-        'PASSWORD': os.getenv('DB_PASSWORD', ''),
-        'HOST': os.getenv('DB_HOST', ''),
-        'PORT': os.getenv('DB_PORT', ''),
-    }
-}
+    # PostgreSQL configuration for Railway
+    DATABASE_URL = os.getenv('DATABASE_URL')  # Optional, in case you set DATABASE_URL
+    if DATABASE_URL:
+        DATABASES = {
+            'default': dj_database_url.parse(DATABASE_URL)
+        }
+    else:
+        # Fallback to individual DB vars
+        required_db_vars = ['DB_ENGINE', 'DB_NAME', 'DB_USER', 'DB_PASSWORD', 'DB_HOST', 'DB_PORT']
+        missing_vars = [var for var in required_db_vars if not os.getenv(var)]
+        if missing_vars:
+            raise ValueError(f"Missing required database environment variables: {', '.join(missing_vars)}")
+
+        DATABASES = {
+            'default': {
+                'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.postgresql'),
+                'NAME': os.getenv('DB_NAME'),
+                'USER': os.getenv('DB_USER'),
+                'PASSWORD': os.getenv('DB_PASSWORD'),
+                'HOST': os.getenv('DB_HOST'),
+                'PORT': os.getenv('DB_PORT'),
+                'OPTIONS': {
+                    'connect_timeout': 5,
+                },
+            }
+        }
 
 
 
