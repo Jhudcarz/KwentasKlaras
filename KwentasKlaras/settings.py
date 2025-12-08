@@ -36,7 +36,7 @@ if not SECRET_KEY:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DJANGO_DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['kwentasklaras-production.up.railway.app','localhost']
 
 
 # Application definition
@@ -278,7 +278,20 @@ DJANGO_EASY_AUDIT_REMOTE_IP_ADDRESS_FIELD = 'REMOTE_ADDR'
 # Exclude specific models (e.g., login/registration) from CRUD auditing
 DJANGO_EASY_AUDIT_EXCLUDED_MODELS = ['auth.User']  # Exclude User model to avoid login/register CRUD tracking
 # Enable request event tracking
-DJANGO_EASY_AUDIT_WATCH_REQUEST_EVENTS = True
+#DJANGO_EASY_AUDIT_WATCH_REQUEST_EVENTS = True
+
+
+
+
+if ENVIRONMENT == 'local':
+    DJANGO_EASY_AUDIT_WATCH_REQUEST_EVENTS = True
+else:
+    DJANGO_EASY_AUDIT_WATCH_REQUEST_EVENTS = False
+
+
+
+
+
 # Example: Exclude requests to static files and Django admin
 DJANGO_EASY_AUDIT_EXCLUDE_REQUESTS = [
     r'^/static/',
